@@ -7,10 +7,14 @@ if [[ -z "$PUBLIC_ADDRESS" ]]; then
         PUBLIC_ADDRESS=`ip route | grep src | awk '{print $9}'`
 fi
 
+if [[ -z "$PUBLIC_PORT" ]]; then
+        PUBLIC_PORT='8080'
+fi
+
 #replace the address of container inside server.xml
-sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
+sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:${PUBLIC_PORT}|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
 sed -i "s|http:\/\/.*:8080\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
-sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps/knowage/WEB-INF/web.xml
+sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:${PUBLIC_PORT}|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps/knowage/WEB-INF/web.xml
 
 #wait for mysql if it's a compose image
 if [ -n "$WAIT_MYSQL" ]; then
