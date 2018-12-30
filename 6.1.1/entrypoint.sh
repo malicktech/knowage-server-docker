@@ -20,7 +20,7 @@ sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:${PUBLIC_PORT}|g" ${KNOWAG
 # THEN
 # service_url = http://localhost:8080/knowage
 # host_url = http://laborex.kaylene-group.com:80
-sed -i "s|http:\/\/.*:80\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
+sed -i "s|http:\/\/.*:${PUBLIC_PORT}\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
 
 sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:${PUBLIC_PORT}|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps/knowage/WEB-INF/web.xml
 
